@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import java.util.Date
 
 class CreateNoteFragment : Fragment() {
@@ -48,7 +50,7 @@ class CreateNoteFragment : Fragment() {
         tvDateTime.text = currentDate
 
         imgDone.setOnClickListener {
-            saveNote()
+            saveNote(view)
         }
 
         imgBack.setOnClickListener {
@@ -56,8 +58,22 @@ class CreateNoteFragment : Fragment() {
         }
     }
 
-    private fun saveNote() {
-//        TODO: save Note
+    private fun saveNote(view: View) {
+        val etNoteTitle = view.findViewById<EditText>(R.id.etNoteTitle)
+        val etNoteSubTitle = view.findViewById<EditText>(R.id.etNoteSubTitle)
+        val etNoteDesc = view.findViewById<EditText>(R.id.etNoteDesc)
+
+        if (etNoteTitle.text.isNullOrEmpty()) {
+            Toast.makeText(context, "Note Title is Required", Toast.LENGTH_SHORT).show()
+        }
+
+        if (etNoteSubTitle.text.isNullOrEmpty()) {
+            Toast.makeText(context, "Note Sub Title is Required", Toast.LENGTH_SHORT).show()
+        }
+
+        if (etNoteDesc.text.isNullOrEmpty()) {
+            Toast.makeText(context, "Note Description must is Required!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun replaceFragment(fragment: Fragment, isTransition: Boolean) {

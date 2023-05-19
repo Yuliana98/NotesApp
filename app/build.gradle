@@ -70,5 +70,5 @@ dependencies {
     implementation 'pub.devrel:easypermissions:3.0.0'
 
     //coroutines core
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
 }
