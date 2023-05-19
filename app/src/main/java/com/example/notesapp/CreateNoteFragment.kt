@@ -10,11 +10,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.notesapp.database.NotesDataBase
+import com.example.notesapp.entities.Notes
+import kotlinx.coroutines.launch
 import java.util.Date
 
-class CreateNoteFragment : Fragment() {
-
-
+class CreateNoteFragment : BaseFragment() {
+    var currentDate: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -42,7 +44,7 @@ class CreateNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        val currentDate = simpleDateFormat.format(Date())
+        currentDate = simpleDateFormat.format(Date())
         val tvDateTime = view.findViewById<TextView>(R.id.tvDateTime)
         val imgDone = view.findViewById<ImageView>(R.id.imgDone)
         val imgBack = view.findViewById<ImageView>(R.id.imgBack)
@@ -73,6 +75,20 @@ class CreateNoteFragment : Fragment() {
 
         if (etNoteDesc.text.isNullOrEmpty()) {
             Toast.makeText(context, "Note Description must is Required!", Toast.LENGTH_SHORT).show()
+        }
+
+        launch {
+            val notes = Notes()
+            notes.title = etNoteTitle.text.toString()
+            notes.subTitle = etNoteSubTitle.text.toString()
+            notes.noteText = etNoteDesc.text.toString()
+            notes.dateTime = currentDate
+            context?.let {
+                NotesDataBase.getDataBase(it).noteDao().insertNotes(notes)
+                etNoteTitle.setText("")
+                etNoteSubTitle.setText("")
+                etNoteDesc.setText("")
+            }
         }
     }
 
