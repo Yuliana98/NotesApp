@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,4 +31,24 @@ class HomeFragment : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val fabBtnCreateNote = view.findViewById<FloatingActionButton>(R.id.fabBtnCreateNote)
+        fabBtnCreateNote.setOnClickListener {
+            replaceFragment(CreateNoteFragment.newInstance(), true)
+        }
+
+    }
+
+    fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
+        val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
+
+        if (isTransition){
+            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
+        }
+        fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
+    }
+
 }

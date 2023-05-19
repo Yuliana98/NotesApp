@@ -15,14 +15,13 @@
         android:text="@string/notes"
         android:paddingStart="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp"
-        android:fontFamily="@font/manrope_bold"
-        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/manrope_bold"
+        android:textColor="@color/white"/>
 
     <SearchView
-        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
@@ -33,16 +32,17 @@
         android:iconifiedByDefault="false"
         app:layout_constraintTop_toBottomOf="@id/tv1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/search_view"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/search_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/recycler_view"/>
 
     <LinearLayout
         android:id="@+id/l1"
@@ -53,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/colorPrimary"
         android:padding="@dimen/_10sdp"
+        android:visibility="invisible"
         android:orientation="horizontal">
 
         <ImageView
