@@ -45,9 +45,6 @@ class CreateNoteFragment : BaseFragment() {
 
         val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         currentDate = simpleDateFormat.format(Date())
-//        val tvDateTime = view.findViewById<TextView>(R.id.tvDateTime)
-//        val imgDone = view.findViewById<ImageView>(R.id.imgDone)
-//        val imgBack = view.findViewById<ImageView>(R.id.imgBack)
 
         binding.tvDateTime.text = currentDate
 
