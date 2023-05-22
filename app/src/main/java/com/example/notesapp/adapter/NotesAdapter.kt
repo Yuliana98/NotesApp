@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.databinding.ItemRecycleviewNotesBinding
 import com.example.notesapp.entities.Notes
 
-class NotesAdapter(val notesList: ArrayList<Notes>) :
+class NotesAdapter(val notesList: List<Notes>) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
