@@ -1,8 +1,7 @@
 package com.example.notesapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
@@ -16,9 +15,13 @@ class MainActivity : AppCompatActivity() {
     fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
         val fragmentTransition = supportFragmentManager.beginTransaction()
 
-        if (isTransition){
-            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
+        if (isTransition) {
+            fragmentTransition.setCustomAnimations(
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left
+            )
         }
-        fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
+        fragmentTransition.add(R.id.frame_layout, fragment)
+            .addToBackStack(fragment.javaClass.simpleName).commit()
     }
 }

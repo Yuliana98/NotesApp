@@ -1,13 +1,11 @@
 package com.example.notesapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.notesapp.databinding.FragmentCreateNoteBinding
+import androidx.fragment.app.Fragment
 import com.example.notesapp.databinding.FragmentHomeBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -38,7 +36,6 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val fabBtnCreateNote = view.findViewById<FloatingActionButton>(R.id.fabBtnCreateNote)
         binding.fabBtnCreateNote.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(), true)
         }
@@ -48,10 +45,14 @@ class HomeFragment : BaseFragment() {
     fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
         val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
 
-        if (isTransition){
-            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
+        if (isTransition) {
+            fragmentTransition.setCustomAnimations(
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left
+            )
         }
-        fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
+        fragmentTransition.add(R.id.frame_layout, fragment)
+            .addToBackStack(fragment.javaClass.simpleName).commit()
     }
 
 }

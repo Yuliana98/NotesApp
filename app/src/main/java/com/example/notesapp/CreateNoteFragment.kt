@@ -2,14 +2,11 @@ package com.example.notesapp
 
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.notesapp.database.NotesDataBase
 import com.example.notesapp.databinding.FragmentCreateNoteBinding
 import com.example.notesapp.entities.Notes
@@ -64,9 +61,6 @@ class CreateNoteFragment : BaseFragment() {
     }
 
     private fun saveNote(view: View) {
-        /*val etNoteTitle = view.findViewById<EditText>(R.id.etNoteTitle)
-        val etNoteSubTitle = view.findViewById<EditText>(R.id.etNoteSubTitle)
-        val etNoteDesc = view.findViewById<EditText>(R.id.etNoteDesc)*/
 
         if (binding.etNoteTitle.text.isNullOrEmpty()) {
             Toast.makeText(context, "Note Title is Required", Toast.LENGTH_SHORT).show()
@@ -98,9 +92,13 @@ class CreateNoteFragment : BaseFragment() {
     fun replaceFragment(fragment: Fragment, isTransition: Boolean) {
         val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
 
-        if (isTransition){
-            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
+        if (isTransition) {
+            fragmentTransition.setCustomAnimations(
+                android.R.anim.slide_out_right,
+                android.R.anim.slide_in_left
+            )
         }
-        fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
+        fragmentTransition.add(R.id.frame_layout, fragment)
+            .addToBackStack(fragment.javaClass.simpleName).commit()
     }
 }
