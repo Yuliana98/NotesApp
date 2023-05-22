@@ -8,13 +8,13 @@ import com.example.notesapp.dao.NoteDao
 import com.example.notesapp.entities.Notes
 
 @Database(entities = [Notes::class], version = 1, exportSchema = false)
-abstract class NotesDataBase: RoomDatabase() {
+abstract class NotesDataBase : RoomDatabase() {
 
-    companion object{
+    companion object {
         var notesDataBase: NotesDataBase? = null
 
         fun getDataBase(context: Context): NotesDataBase {
-            if (notesDataBase != null) {
+            if (notesDataBase == null) {
                 notesDataBase = Room.databaseBuilder(
                     context,
                     NotesDataBase::class.java,
