@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.notesapp.databinding.FragmentCreateNoteBinding
+import com.example.notesapp.databinding.FragmentHomeBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : BaseFragment() {
-
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -19,8 +22,8 @@ class HomeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     companion object {
@@ -35,8 +38,8 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fabBtnCreateNote = view.findViewById<FloatingActionButton>(R.id.fabBtnCreateNote)
-        fabBtnCreateNote.setOnClickListener {
+//        val fabBtnCreateNote = view.findViewById<FloatingActionButton>(R.id.fabBtnCreateNote)
+        binding.fabBtnCreateNote.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(), true)
         }
 
