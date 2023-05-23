@@ -28,7 +28,6 @@ class NotesAdapter(val notesList: List<Notes>) :
                 binding.tvDateTime.text = dateTime
             }
         }
-//        holder.itemView.findViewById<TextView>(R.id.tvTitle)
 
     }
 
