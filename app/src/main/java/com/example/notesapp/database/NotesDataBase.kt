@@ -13,6 +13,7 @@ abstract class NotesDataBase : RoomDatabase() {
     companion object {
         var notesDataBase: NotesDataBase? = null
 
+        @Synchronized
         fun getDataBase(context: Context): NotesDataBase {
             if (notesDataBase == null) {
                 notesDataBase = Room.databaseBuilder(

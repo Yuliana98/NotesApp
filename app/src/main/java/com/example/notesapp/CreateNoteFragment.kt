@@ -23,15 +23,23 @@ import java.util.Date
 
 class CreateNoteFragment : BaseFragment() {
     var currentDate: String? = null
+    private var noteId = -1
     var selectedColor = "#171C26"
 
     private var _binding: FragmentCreateNoteBinding? = null
     private val binding get() = _binding!!
-
+    companion object {
+        @JvmStatic
+        fun newInstance() =
+            CreateNoteFragment().apply {
+                arguments = Bundle().apply {
+                }
+            }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+
+        noteId = requireArguments().getInt("noteId",-1)
     }
 
     override fun onCreateView(
@@ -42,35 +50,29 @@ class CreateNoteFragment : BaseFragment() {
         return binding.root
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            CreateNoteFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
+            BroadcastReceiver, IntentFilter("bottom_sheet_action")
+        )
+
         val simpleDateFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+
         currentDate = simpleDateFormat.format(Date())
         binding.tvDateTime.text = currentDate
-
         binding.colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
         binding.imgDone.setOnClickListener {
+            println("noteId =  $noteId ")
             if (noteId != -1) {
                 updateNote()
             } else {
                 saveNote()
             }
         }
-
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
-            BroadcastReceiver, IntentFilter("bottom_sheet_action")
-        )
 
         binding.imgBack.setOnClickListener {
             replaceFragment(HomeFragment.newInstance(), false)
@@ -110,13 +112,17 @@ class CreateNoteFragment : BaseFragment() {
                     binding.etNoteTitle.setText("")
                     binding.etNoteSubTitle.setText("")
                     binding.etNoteDesc.setText("")
+                    binding.layoutImage.visibility = View.GONE
+                    binding.imgNote.visibility = View.GONE
+                    binding.tvWebLink.visibility = View.GONE
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
             }
         }
 
     }
 
-    private fun updateNote() {
+    private fun updateNote(){
         launch {
 
             context?.let {
@@ -127,17 +133,26 @@ class CreateNoteFragment : BaseFragment() {
                 notes.noteText = binding.etNoteDesc.text.toString()
                 notes.dateTime = currentDate
                 notes.color = selectedColor
+                /*notes.imgPath = binding.selectedImagePath
+                notes.webLink = binding.webLink*/
 
                 NotesDataBase.getDataBase(it).noteDao().updateNote(notes)
                 binding.etNoteTitle.setText("")
                 binding.etNoteSubTitle.setText("")
                 binding.etNoteDesc.setText("")
                 binding.layoutImage.visibility = View.GONE
-
+                binding.imgNote.visibility = View.GONE
+                binding.tvWebLink.visibility = View.GONE
                 requireActivity().supportFragmentManager.popBackStack()
             }
         }
+    }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(BroadcastReceiver)
     }
 
     fun replaceFragment(fragment: Fragment, isTransition: Boolean) {

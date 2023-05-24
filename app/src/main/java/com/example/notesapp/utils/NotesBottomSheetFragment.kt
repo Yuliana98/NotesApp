@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class NotesBottomSheetFragment : BottomSheetDialogFragment() {
 
-    var selectedColor = "#171C26"
+    var selectedColor = "#4e33ff"
 
     private var _binding: FragmentNotesBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -35,6 +35,57 @@ class NotesBottomSheetFragment : BottomSheetDialogFragment() {
             fragment.arguments = args
             noteId = id
             return fragment
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun setupDialog(dialog: Dialog, style: Int) {
+        super.setupDialog(dialog, style)
+
+        val view = LayoutInflater.from(context).inflate(R.layout.fragment_notes_bottom_sheet, null)
+        dialog.setContentView(view)
+
+        val param = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
+
+        val behavior = param.behavior
+
+        if (behavior is BottomSheetBehavior<*>) {
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    var state = ""
+                    when (newState) {
+                        BottomSheetBehavior.STATE_DRAGGING -> {
+                            state = "DRAGGING"
+                        }
+
+                        BottomSheetBehavior.STATE_SETTLING -> {
+                            state = "SETTLING"
+                        }
+
+                        BottomSheetBehavior.STATE_EXPANDED -> {
+                            state = "EXPANDED"
+                        }
+
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            state = "COLLAPSED"
+                        }
+
+                        BottomSheetBehavior.STATE_HIDDEN -> {
+                            state = "HIDDEN"
+                            dismiss()
+                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        }
+
+                    }
+                }
+
+            })
+
+
         }
     }
 
@@ -173,58 +224,6 @@ class NotesBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    override fun setupDialog(dialog: Dialog, style: Int) {
-        super.setupDialog(dialog, style)
-
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_notes_bottom_sheet, null)
-        dialog.setContentView(view)
-
-        val param = (view.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-
-        val behavior = param.behavior
-
-        if (behavior is BottomSheetBehavior<*>) {
-            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    var state = ""
-                    when (newState) {
-                        BottomSheetBehavior.STATE_DRAGGING -> {
-                            state = "DRAGGING"
-                        }
-
-                        BottomSheetBehavior.STATE_SETTLING -> {
-                            state = "SETTLING"
-                        }
-
-                        BottomSheetBehavior.STATE_EXPANDED -> {
-                            state = "EXPANDED"
-                        }
-
-                        BottomSheetBehavior.STATE_COLLAPSED -> {
-                            state = "COLLAPSED"
-                        }
-
-                        BottomSheetBehavior.STATE_HIDDEN -> {
-                            state = "HIDDEN"
-                            dismiss()
-                            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                        }
-
-                    }
-                }
-
-            })
-
-
-        }
     }
 
 }
